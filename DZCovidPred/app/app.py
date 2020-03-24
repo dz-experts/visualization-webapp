@@ -27,11 +27,11 @@ def register_extensions(app):
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    from app.comparisons.views import comparisons
+    from app.Stats.views import stats
     from app.predictions.views import predictions
     
-    app.register_blueprint(comparisons)
-    app.register_blueprint(predictions, url_prefix="/predictions")    
+    app.register_blueprint(stats)
+    #app.register_blueprint(predictions, url_prefix="/predictions")    
     return None
 
 
