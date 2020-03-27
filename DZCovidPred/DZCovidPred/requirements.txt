@@ -1,7 +1,0 @@
-Flask==1.1.1
-requests==2.22.0
-Flask_Login==0.5.0
-Flask_Bcrypt==0.7.1
-Flask_Caching==1.7.2
-Flask_WTF==0.14.3
-environs==4.2.0

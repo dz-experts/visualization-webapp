@@ -15,8 +15,9 @@
         </p> 
     </div>    
 </div>
-<div class="row">
-    <div class="col-lg-7 col-xl-6">
+<!-- Global statisitcs-->
+<div class="row">    
+    <div class="col-lg-5">
         <section class="widget">
             <header>
                 <h5>
@@ -29,8 +30,7 @@
                     <canvas id="main-stats-canvas" style="width: 100%; height: 100%;"></canvas>
                 </div>                
                 <div class="visits-info well well-sm">
-                    <div class="row">  
-                        <div class="col-sm-1 col-xs-1"></div>                        
+                    <div class="row">                          
                         <div class="col-sm-2 col-xs-6">
                             <div class="key"><strong>Confirmed</strong></div>
                             <div id="totalconfirmed" class="value">201 <i class="fa fa-caret-up color-red"></i></div>
@@ -43,7 +43,7 @@
                             <div class="key"><strong>Deaths</strong></div>
                             <div id='deaths' class="value">17 <i class="fa fa-caret-up color-red"></i></div>
                         </div> 
-                        <div class="col-sm-2 col-xs-6">
+                        <div class="col-sm-3 col-xs-6">
                             <div class="key"><strong>New cases</strong></div>
                             <div id="newcases" class="value">27 <i class="fa fa-caret-up color-red"></i></div>
                         </div>                       
@@ -56,7 +56,63 @@
             </div>
         </section>
     </div>
-    <div class="col-lg-5 col-xl-5">
+    <div class="col-lg-2">
+        <section class="widget">
+            <header>
+                <h5>
+                    Cases Categorie
+                </h5>                
+            </header>
+            <div class="widget-body">
+                <div class="mt mb" id="origin-stats" style="width: 100%; height: 250px;">
+                    <canvas id="origin-stats-canvas" style="width: 100%; height: 100%;"></canvas>
+                </div>                    
+                <div class="visits-info well well-sm">
+                    <div class="row">                          
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="key">
+                                <i class="fa fa-male"></i>
+                                <strong>Males</strong>
+                            </div>
+                            <div id="nbMale" class="value">10</div>
+                        </div>                        
+                        <div class="col-sm-6 col-xs-6">
+                            <div class="key">
+                                <i class="fa fa-female"></i>
+                                <strong>Females</strong>
+                            </div>
+                            <div id="nbFemale" class="value">10</div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-2 col-xl-5">
+        <section class="widget">
+            <header>
+                <h5>
+                    Cases by age
+                </h5>                
+            </header>
+            <div class="widget-body">
+                <div class="mt mb" id="demographics-stats" style="width: 100%; height: 250px;">
+                    <canvas id="demographics-stats-canvas" style="width: 100%; height: 100%;"></canvas>
+                </div>    
+                <div class="visits-info well well-sm">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-1"></div>
+                        <div class="col-sm-12 col-xs-6">
+                            <div class="key"><strong>% of young (< 45)</strong></div>
+                            <div id="demographics_info" class="value">0</div>
+                        </div>                                                
+                        <div class="col-sm-3 col-xs-1"></div>                 
+                    </div>
+                </div>                            
+            </div>
+        </section>
+    </div>
+    <div class="col-lg-3 col-xl-5">
         <section class="widget">
             <header>
                 <h5>
@@ -70,7 +126,7 @@
                 <div class="visits-info well well-sm">
                     <div class="row">
                         <div class="col-sm-3 col-xs-1"></div>
-                        <div class="col-sm-6 col-xs-6">
+                        <div class="col-sm-12 col-xs-6">
                             <div class="key"><strong>Number of infected willays</strong></div>
                             <div id="infectedWilaya" class="value">24</div>
                         </div>                                                
@@ -81,6 +137,7 @@
         </section>
     </div>
 </div>
+<!-- A row of chats to display wilaya stats-->
 <div class="row">
     <div class="col-lg-4 col-xl-5">
         <section class="widget">
@@ -127,6 +184,39 @@
         </section>
     </div>
 </div>
+
+<!-- In this row we display some statistics about the population -->
+<!-- <div class="row">    
+    <div class="col-lg-4 col-xl-5">
+        <section class="widget">
+            <header>
+                <h5>
+                    Age distribution
+                </h5>                
+            </header>
+            <div class="widget-body">
+                <div class="mt mb" id="age-stats" style="width: 100%; height: 250px;">
+                    <canvas id="age-stats-canvas" style="width: 100%; height: 100%;"></canvas>
+                </div>                    
+            </div>
+        </section>
+    </div>
+
+    <div class="col-lg-4 col-xl-5">
+        <section class="widget">
+            <header>
+                <h5>
+                    Confirmed cases per-wilaya
+                </h5>                
+            </header>
+            <div class="widget-body">
+                <div class="mt mb" id="confirmed-stats" style="width: 100%; height: 250px;">
+                    <canvas id="confirmed-stats-canvas" style="width: 100%; height: 100%;"></canvas>
+                </div>                    
+            </div>
+        </section>
+    </div>
+</div> -->
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

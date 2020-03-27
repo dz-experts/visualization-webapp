@@ -3,7 +3,8 @@ $(function(){
 
     const COLORS = {
         lineChart: ["#E64B35FF","#00A087FF", "#D2AF81FF"],
-        barChart: ['#8cc1f7', '#b8ffb7', '#f0af03'],
+        barChart: ["#EFDC60", "#3cba9f"],
+        agesBarChart: ['#59C7EB','#CCEEF9','#FFB8AC','#FEE2DD','#0AA398','#71D1CC','#ECA0B2','#F3BFCB','#B8BCC1','#E1E2E5'],
         trackingChart: ['#7ece7c', '#f3794c'],
         pieChart: ['#ffd7de', '#8fe5d4', '#ace5d1', '#ffebb2', '#fff8e3'],
         markers: ['#e2e1ff', '#f59f9f', '#ffd7de', '#8fe5d4', '#ace5d1', '#ffebb2', '#fff8e3'],
@@ -102,6 +103,42 @@ $(function(){
 
     }
 
+
+    class plotBarChart {
+        constructor(data, container, direction) {            
+            this.$chartContainer = $(container);            
+            this.direction = direction;
+            this.chart = this.createBarPlot(data);            
+            this.initEventListeners();
+        }
+
+        createBarPlot(data) {            
+            return new Chart(this.$chartContainer, {
+                type: this.direction,
+                data: data,
+                options: {
+                  legend: false,
+                  scales: {
+                    xAxes: [{                        
+                        ticks : {
+                            fontColor : "white"
+                        }                            
+                    }],
+                    yAxes : [{                            
+                        ticks :{                            
+                            fontColor : 'white',
+                            beginAtZero: true
+                        }
+                    }]                        
+                },
+                }
+            });                    
+        }
+
+        initEventListeners() {}
+
+    }
+
     // Data fetching methods
     const displayDZCOVIDHistory= async() => {
             
@@ -185,7 +222,7 @@ $(function(){
                 let values = [];                
 
                 for(let i=0; i< data.length; i++){
-                    values.push( data[i].active);
+                    values.push( data[i].actives);
                     labels.push( data[i].name);
                 }
 
@@ -289,6 +326,65 @@ $(function(){
                })
     }
 
+    const displayAgeDistribution = async() => {
+        let datasets = [];
+        let labels = ['0-5', '5-14', '15-24', '25-34', '35-44', '45-59', '60-70', '70+'];
+
+        await fetch(`${window.origin}/ages`)
+              .then( response => response.json())
+              .then( data => {                                                        
+                datasets.push({                    
+                    data : labels.map(p => data[p]),
+                    backgroundColor : COLORS.agesBarChart.map(c => changeOpacity(c, 50)),
+                    barPercentage : 0.5
+                  })    
+                  
+                  let percent = 100 * labels.map(p => data[p]).slice(0,5).reduce((a,b) => a+ b,0)/labels.map(p => data[p]).reduce( (a,b) =>a+b,0)
+                  $("#demographics_info")[0].innerHTML = percent.toFixed(2) + " %"
+              })
+        
+        let res = {
+            labels : labels,
+            datasets : datasets,
+        }
+        new plotBarChart(res, "#demographics-stats-canvas","horizontalBar")
+    }
+
+
+    const displayCasesOrigines = async() => {
+        let datasets = [];
+        await fetch(`${window.origin}/origins`)
+              .then( response => response.json())
+              .then( data => {
+                  let values = [ data.local , data.imported]                  
+
+                  datasets.push({                    
+                    data : values,
+                    backgroundColor : COLORS.barChart.map(c => changeOpacity(c, 50)),
+                    barPercentage : 0.5
+                  })
+              })
+        
+        let res = {
+            labels : ['Local', 'Imported'],                            
+            datasets : datasets,
+        }
+        new plotBarChart(res, "#origin-stats-canvas","bar")
+    }
+
+
+    const displaySexesStats = async() => {
+        let datasets = [];
+        await fetch(`${window.origin}/sex`)
+              .then( response => response.json())
+              .then( data => {
+                $("#nbMale")[0].innerHTML = data.male
+                $("#nbFemale")[0].innerHTML = data.female
+              })                
+    }
+
+    
+
     function pageLoad() {
         $('.widget').widgster();
         $('.sparkline').each(function () {
@@ -299,9 +395,12 @@ $(function(){
     }
 
     function createCharts() {
-        displayDZCOVIDHistory();    
+        displayDZCOVIDHistory()
         getWilayaWithActiveCases()    
         displayWilayaStats()
+        displayCasesOrigines()
+        displayAgeDistribution()
+        displaySexesStats()
     }
 
     function resizeCharts() {
